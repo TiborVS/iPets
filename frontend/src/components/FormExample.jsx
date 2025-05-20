@@ -1,14 +1,10 @@
 import Form from "./Form";
 
-export default function Home() {
-
-    function testForm(values) {
-        console.log(values);
-    }
+export default function FormExample() {
 
     return(
         <>
-            <h1>Home</h1>
+            <h1>FormExample</h1>
             <Form title="My form" fields={[
                 {
                     name: "username",
