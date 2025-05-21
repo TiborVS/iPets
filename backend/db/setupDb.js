@@ -65,6 +65,16 @@ async function setupDb() {
         console.log('Created table: medications');
     }
 
+    const refreshTokensExist = await knex.schema.hasTable('refresh_tokens');
+    if (!refreshTokensExist) {
+        await knex.schema.createTable('refresh_tokens', (table) => {
+            table.increments('id').primary();
+            table.string('token').notNullable();
+            table.integer('userId').notNullable().references('id').inTable('users').onDelete('CASCADE');
+        });
+        console.log('Created table: refresh_tokens');
+    }
+
     await knex.destroy();
     console.log('Database setup complete.');
 }

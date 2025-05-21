@@ -16,6 +16,8 @@ module.exports = {
         if (!user.email || !user.password) {
             throw new HttpError("Email and password must be provided", 400);
         }
+        let existingUser = await userModel.getByEmail(user.email);
+        if (existingUser) throw new HttpError("User with that email already exists", 400);
         try {
             let encryptedPassword = await bcrypt.hash(user.password, 10);
             let newUser = new userModel.User(user.email, encryptedPassword);

@@ -9,6 +9,10 @@ module.exports = {
         return await knex('users').where({ id }).first();
     },
 
+    getByEmail: async function (email) {
+        return await knex('users').where({ email }).first();
+    },
+
     insert: async function (user) {
         const [insertedId] = await knex('users').insert({
             email: user.email,
