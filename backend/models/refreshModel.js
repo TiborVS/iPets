@@ -17,5 +17,9 @@ module.exports = {
             }
         );
         return await knex('refresh_tokens').where({ id: insertedId }).first();
+    },
+
+    remove: async function (userId) {
+        return await knex('refresh_tokens').where({ userId: userId }).del();
     }
 }

@@ -73,5 +73,17 @@ module.exports = {
             throw new HttpError(err.message, 500);
         }
 
+    },
+
+    invalidateRefresh: async function (userId) {
+        if (!userId) {
+            throw new HttpError("User id must be provided!", 400);
+        }
+        try {
+            await refreshModel.remove(userId);
+        }
+        catch (err) {
+            throw new HttpError(err.message, 500);
+        }
     }
 };

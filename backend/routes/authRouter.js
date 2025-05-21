@@ -23,4 +23,15 @@ authRouter.post('/refresh', async (req, res) => {
     }
 });
 
+authRouter.post('/logout', async (req, res) => {
+    const user = req.user;
+    try {
+        await authController.invalidateRefresh(user.id);
+        res.status(200).json({message: "Successfully logged out."});
+    }
+    catch (err) {
+        res.status(err.httpStatus).json({error: err.message});
+    }
+})
+
 module.exports = authRouter;
