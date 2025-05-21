@@ -1,5 +1,6 @@
 const express = require('express');
 const usersController = require('../controllers/usersController');
+const authenticateToken = require('../middleware/authenticateToken');
 const usersRouter = express.Router();
 
 usersRouter.get('/', async function (req, res) {
@@ -12,7 +13,8 @@ usersRouter.get('/', async function (req, res) {
     }
 });
 
-usersRouter.get('/:userId', async function (req, res) {
+usersRouter.get('/:userId', authenticateToken, async function (req, res) {
+    if (req.params.userId !== req.user.id) return res.status(403).json({error: "Cannot access this user."}); 
     try {
         const user = await usersController.getById(req.params.userId);
         if (!user) return res.status(404).json({ error: "User not found" });
@@ -36,7 +38,8 @@ usersRouter.post('/', async function (req, res) {
     }
 });
 
-usersRouter.put('/:userId', async function (req, res) {
+usersRouter.put('/:userId', authenticateToken, async function (req, res) {
+    if (req.params.userId !== req.user.id) return res.status(403).json({error: "Cannot access this user."}); 
     if (!req.body.user) {
         return res.status(400).json({ error: "User object missing in body" });
     }
@@ -50,7 +53,8 @@ usersRouter.put('/:userId', async function (req, res) {
     }
 });
 
-usersRouter.delete('/:userId', async function (req, res) {
+usersRouter.delete('/:userId', authenticateToken, async function (req, res) {
+    if (req.params.userId !== req.user.id) return res.status(403).json({error: "Cannot access this user."}); 
     try {
         const user = await usersController.getById(req.params.userId);
         if (!user) return res.status(404).json({ error: "User not found" });

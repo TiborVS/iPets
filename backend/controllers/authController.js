@@ -20,16 +20,17 @@ module.exports = {
             throw new HttpError('Invalid password', 401);
         }
 
-        const payload = { id: user.id, email: user.email };
+        const accessPayload = { id: user.id, email: user.email, type: "access" };
+        const refreshPayload = { id: user.id, email: user.email, type: "refresh" };
 
         try {
             const accessToken = jwt.sign(
-                payload,
+                accessPayload,
                 process.env.JWT_SECRET,
                 { expiresIn: '24h' }
             );
             const refreshToken = jwt.sign(
-                payload,
+                refreshPayload,
                 process.env.JWT_SECRET,
                 { expiresIn: '7d' }
             );

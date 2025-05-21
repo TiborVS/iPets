@@ -1,6 +1,7 @@
 const express = require('express');
 const authController = require('../controllers/authController');
 const authRouter = express.Router();
+const authenticateToken = require('../middleware/authenticateToken');
 
 authRouter.post('/token', async (req, res) => {
     const { email, password } = req.body;
@@ -23,7 +24,7 @@ authRouter.post('/refresh', async (req, res) => {
     }
 });
 
-authRouter.post('/logout', async (req, res) => {
+authRouter.post('/logout', authenticateToken, async (req, res) => {
     const user = req.user;
     try {
         await authController.invalidateRefresh(user.id);
