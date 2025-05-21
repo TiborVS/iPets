@@ -55,12 +55,12 @@ module.exports = {
             throw new HttpError("Invalid refresh token", 401);
         }
 
-        const token = refreshModel.getByToken(refreshToken);
-        if (token.length < 1) {
+        const tokens = await refreshModel.getByToken(refreshToken);
+        if (tokens.length < 1) {
             throw new HttpError("Invalid refresh token", 401);
         }
 
-        const payload = { id: decoded.id, email: decoded.email };
+        const payload = { id: decoded.id, email: decoded.email, type: "access" };
 
         try {
             const accessToken = jwt.sign(

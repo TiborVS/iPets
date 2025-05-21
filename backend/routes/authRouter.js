@@ -15,13 +15,16 @@ authRouter.post('/token', async (req, res) => {
 });
 
 authRouter.post('/refresh', async (req, res) => {
-    const refreshToken = req.body.refreshToken;
-    try {
-        const accessToken = await authController.refreshAccess(refreshToken);
-        res.status(200).json({accessToken});
-    } catch (err) {
-        res.status(err.httpStatus).json({error: err.message});
+    if (req.body) {
+        const refreshToken = req.body.refreshToken;
+        try {
+            const accessToken = await authController.refreshAccess(refreshToken);
+            return res.status(200).json({accessToken});
+        } catch (err) {
+            return res.status(err.httpStatus).json({error: err.message});
+        }
     }
+    else return res.status(401).json({error: "Token not provided"});
 });
 
 authRouter.post('/logout', authenticateToken, async (req, res) => {

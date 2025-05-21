@@ -1,12 +1,14 @@
 const express = require('express');
 const logger = require('morgan');
 require('dotenv').config();
+const cors = require('cors');
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(logger('dev'));
 app.use(express.json());
+app.use(cors());
 
 const usersRouter = require('./routes/usersRouter');
 const petsRouter = require('./routes/petsRouter');

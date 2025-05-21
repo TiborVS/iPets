@@ -1,17 +1,22 @@
-import { Fragment, useState } from "react"
+import { Fragment, useState, useMemo } from "react"
 
 export default function Form({ title, fields, submitCallback, error, submitText }) {
 
-    let defaultValues = {};
-    for (let field of fields) {
-        defaultValues[field.name] = field.default || "";
-    } 
+    const defaultValues = useMemo(() => {
+        const initial = {};
+        for (let field of fields) {
+            initial[field.name] = field.default || "";
+        }
+        return initial;
+    }, [fields]);
 
     const [values, setValues] = useState(defaultValues);
 
     function updateValue(name, value) {
+        console.log(`updateValue: ${name} = ${value}`);
         let newValues = structuredClone(values);
         newValues[name] = value;
+        console.log(JSON.stringify(newValues));
         setValues(newValues);
     }
 
@@ -19,7 +24,7 @@ export default function Form({ title, fields, submitCallback, error, submitText 
         const textTypes = ["text", "email", "password"];
         if (field.type == "textarea") {
             return (
-                <textarea name={field.name} id={field.name} placeholder={field.placeholder} onChange={(e) => {updateValue(field.name, e.target.value)}}>{values[field.name]}</textarea>
+                <textarea name={field.name} id={field.name} placeholder={field.placeholder} value={values[field.name]} onChange={(e) => {updateValue(field.name, e.target.value)}}></textarea>
             )
         }
         else if (textTypes.includes(field.type)) {
@@ -39,16 +44,17 @@ export default function Form({ title, fields, submitCallback, error, submitText 
         </Fragment>
     )
 
-    function submitHandler(e) {
+    async function submitHandler(e) {
+        console.log("SubmitHandler called with: " + values);
         e.preventDefault();
-        submitCallback(values);
+        await submitCallback(values);
         setValues(defaultValues);
     }
 
     return (
         <>
             <h3>{title}</h3>
-            <form onSubmit={submitHandler}>
+            <form onSubmit={submitHandler} noValidate>
                 {inputs}
                 <button type="submit">{submitText}</button>
                 <p className="error">{error}</p>
