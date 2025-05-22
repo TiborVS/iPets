@@ -1,31 +1,14 @@
-import Form from "./Form";
+import LoginTest from "./LoginTest";
+import PetCard from "./PetCard";
+import PetList from "./PetList";
 
 export default function Home() {
-
-    function testForm(values) {
-        console.log(values);
-    }
 
     return(
         <>
             <h1>Home</h1>
-            <Form title="My form" fields={[
-                {
-                    name: "username",
-                    type: "text",
-                    displayName: "Uporabniško ime",
-                    placeholder: "Vnesi uporabniško ime",
-                    default: ""
-                },
-                {
-                    name: "password",
-                    type: "password",
-                    displayName: "Geslo",
-                    placeholder: "Vnesi geslo",
-                    default: ""
-                }
-            ]}
-            submitText={"Prijava"} submitCallback={(values) => console.log(values)}></Form> 
+            <LoginTest></LoginTest>
+            <PetList/>
         </>
     )
 }

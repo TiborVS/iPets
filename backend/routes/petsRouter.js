@@ -25,12 +25,12 @@ petsRouter.get('/:petId', authenticateToken, async function (req, res) {
     }
 });
 
-petsRouter.get('/user/:userId', async function (req, res) {
+petsRouter.get('/user/:userId', authenticateToken, async function (req, res) {
+    if (req.user.id != req.params.userId) return res.status(403).json({error: "Not allowed to access this user's pets."});
     try {
-        const pet = await petsController.getByUser(req.params.userId);
-        if (!pet) return res.status(404).json({ error: "Pet not found" });
-        if (pet.userId !== req.user.id) return res.status(403).json({error: "Not allowed to access this user's pets."});
-        return res.status(200).json(pet);
+        const pets = await petsController.getByUser(req.params.userId);
+        if (!pets) return res.status(404).json({ error: "Pets not found" });
+        return res.status(200).json(pets);
     }
     catch (err) {
         return res.status(err.httpStatus).json({ error: err.message })
