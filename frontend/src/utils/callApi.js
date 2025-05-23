@@ -11,6 +11,7 @@ async function callApi(method, url, endpoint, body, token) {
     options.headers = headers;
     options.method = method;
     const fetchResponse = await fetch(url + endpoint, options);
+    const responseJson = await fetchResponse.json();
     if (!fetchResponse.ok && fetchResponse.status == 401) {
         try {
             await refreshAccessToken(url);
@@ -18,13 +19,15 @@ async function callApi(method, url, endpoint, body, token) {
             const retryResponse = await fetch(url + endpoint, options);
             const retryJson = await retryResponse.json();
             if (retryResponse.ok) return retryJson;
-            else throw new Error("Invalid access token and cannot refresh");
+            else throw new Error(retryJson.error);
         }
         catch (err) {
-            throw new Error("Invalid access token and cannot refresh");
+            throw new Error("Invalid access token and cannot refresh, error: " + err.message);
         }
     }
-    const responseJson = await fetchResponse.json();
+    else if (!fetchResponse.ok) {
+        throw new Error("Error fetching data: " + responseJson.error); 
+    }
     return responseJson;
 }
 
