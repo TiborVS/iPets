@@ -5,7 +5,6 @@ import callApi from "../utils/callApi";
 
 export default function Register() {
 
-    const API_URL = "http://localhost:3000";
     const navigate = useNavigate();
 
     const formFields = [
@@ -46,7 +45,7 @@ export default function Register() {
             password: formData.password
         }};
         try {
-            const response = await callApi('POST', API_URL, "/users", requestBody);
+            const response = await callApi('POST', import.meta.env.VITE_API_URL, "/users", requestBody);
             if (response.id) {
                 navigate('/');
             }

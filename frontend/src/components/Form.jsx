@@ -1,4 +1,4 @@
-import { Fragment, useState, useMemo } from "react"
+import { Fragment, useState, useMemo, useEffect } from "react"
 
 export default function Form({ title, fields, submitCallback, error, submitText }) {
 
@@ -12,8 +12,11 @@ export default function Form({ title, fields, submitCallback, error, submitText 
 
     const [values, setValues] = useState(defaultValues);
 
+    useEffect(() => {
+        setValues(defaultValues);
+    }, [fields])
+
     function updateValue(name, value) {
-        console.log(`updateValue: ${name} = ${value}`);
         let newValues = structuredClone(values);
         newValues[name] = value;
         console.log(JSON.stringify(newValues));
@@ -31,6 +34,16 @@ export default function Form({ title, fields, submitCallback, error, submitText 
             return (
                 <input type={field.type} name={field.name} id={field.name} placeholder={field.placeholder} value={values[field.name]} onChange={(e) => {updateValue(field.name, e.target.value)}}></input>
             );
+        }
+        else if (field.type == "date") {
+            return (
+                <input type="date" name={field.name} id={field.name} value={values[field.name]} onChange={(e) => { updateValue(field.name, e.target.value) }}></input>
+            )
+        }
+        else if (field.type == "hidden") {
+            return (
+                <input type="hidden" name={field.name} id={field.name} value={values[field.name]} ></input>
+            )
         }
         else {
             console.error("Form.jsx: " + field.type + " is not a valid field type!");

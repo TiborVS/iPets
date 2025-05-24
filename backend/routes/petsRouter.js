@@ -42,7 +42,7 @@ petsRouter.post('/', authenticateToken, async function (req, res) {
         return res.status(400).json({ error: "Body must contain pet data!" });
     }
     try {
-        const pet = await petsController.insert(req.body.pet, req);
+        const pet = await petsController.insert(req.body.pet, req.user.id);
         return res.status(201).json(pet);
     }
     catch (err) {

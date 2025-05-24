@@ -6,7 +6,6 @@ import { useNavigate } from "react-router";
 
 export default function PetList() {
 
-    const API_URL="http://localhost:3000";
     const navigate = useNavigate();
 
     const [pets, setPets] = useState([]);
@@ -21,7 +20,7 @@ export default function PetList() {
             navigate('/login')
         }
         try {
-            const response = await callApi('GET', API_URL, '/pets/user/' + jwtDecode(token).id, null, token);
+            const response = await callApi('GET', import.meta.env.VITE_API_URL, '/pets/user/' + jwtDecode(token).id, null, token);
             if (response.error) {
                 console.error(response.error);
             }
@@ -36,9 +35,9 @@ export default function PetList() {
 
     return (
         <>
-        {pets && pets.map((pet) => <>
-            <PetCard pet={pet} />
-        </>)}
+        {pets && pets.map((pet) => 
+            <PetCard key={pet.id} pet={pet} />
+        )}
         </>
     )
 

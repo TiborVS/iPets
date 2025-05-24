@@ -5,7 +5,6 @@ import callApi from "../utils/callApi";
 
 export default function Login() {
 
-    const API_URL = "http://localhost:3000";
     const navigate = useNavigate();
 
     const formFields = [
@@ -42,7 +41,7 @@ export default function Login() {
             password: formData.password
         };
         try {
-            const response = await callApi('POST', API_URL, "/auth/token", requestBody);
+            const response = await callApi('POST', import.meta.env.VITE_API_URL, "/auth/token", requestBody);
             if (response.accessToken) {
                 localStorage.setItem("accessToken", response.accessToken);
                 localStorage.setItem("refreshToken", response.refreshToken);
