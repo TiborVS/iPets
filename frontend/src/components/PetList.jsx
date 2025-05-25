@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import callApi from "../utils/callApi";
 import { jwtDecode } from "jwt-decode";
 import PetCard from "./PetCard";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { UserContext } from "../context/UserContext";
 
 export default function PetList() {
@@ -32,6 +32,7 @@ export default function PetList() {
 
     return (
         <>
+        <Link to="/pets/new">Dodaj žival</Link>
         {pets && pets.map((pet) => 
             <PetCard key={pet.id} pet={pet} />
         )}

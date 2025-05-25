@@ -2,6 +2,7 @@ import { useParams, Link } from "react-router";
 import { useState, useEffect } from "react";
 import callApi from "../utils/callApi";
 import ISODateToSloveneString from "../utils/ISODateToSloveneString";
+import DeletePet from "./DeletePet";
 
 export default function PetDetail() {
 
@@ -33,7 +34,7 @@ export default function PetDetail() {
                 <h2>{pet.name}</h2>
                 <span>{pet.species} | {pet.breed}</span>
                 {pet.birthday && <p>Rojena {ISODateToSloveneString(pet.birthday)}</p>}
-                <p><Link to={"/pets/edit/" + pet.id}>Uredi</Link></p>
+                <p><Link to={"/pets/edit/" + pet.id}>Uredi</Link><DeletePet pet={pet}/></p>
             </div>
     )
 }

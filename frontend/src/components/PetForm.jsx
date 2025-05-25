@@ -36,7 +36,7 @@ export default function PetForm({isEditing}) {
             name: "birthday",
             type: "date",
             displayName: "Datum rojstva",
-            default: (new Date()).toISOString()
+            default: ""
         }
     ]);
 

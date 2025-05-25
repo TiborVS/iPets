@@ -37,7 +37,9 @@ module.exports = {
         }
         if (isNaN(parseInt(userId))) throw new HttpError("ID must be an integer", 400);
         try {
-            pet.birthday = new Date(pet.birthday);
+            if (pet.birthday == "") pet.birthday = null; 
+            else pet.birthday = new Date(pet.birthday);
+            if (pet.breed == "") pet.breed = null;
             let newPet = new petModel.Pet(pet.name, pet.species, userId, pet.breed, pet.birthday, pet.imageId);
             return await petModel.insert(newPet);
         }
@@ -51,7 +53,9 @@ module.exports = {
             throw new HttpError("Pet ID must be provided", 400);
         }
         try {
-            pet.birthday = new Date(pet.birthday);
+            if (pet.birthday == "") pet.birthday = null; 
+            else pet.birthday = new Date(pet.birthday);
+            if (pet.breed == "") pet.breed = null;
             let newPet = new petModel.Pet(pet.name, pet.species, pet.userId, pet.breed, pet.birthday, pet.imageId, pet.id);
             return await petModel.update(newPet);
         }
