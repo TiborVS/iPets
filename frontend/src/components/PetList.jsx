@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import callApi from "../utils/callApi";
 import { jwtDecode } from "jwt-decode";
 import PetCard from "./PetCard";
 import { useNavigate } from "react-router";
+import { UserContext } from "../context/UserContext";
 
 export default function PetList() {
 
-    const navigate = useNavigate();
-
+    const { user, setUser } = useContext(UserContext);
     const [pets, setPets] = useState([]);
 
     useEffect(() => {
@@ -16,11 +16,8 @@ export default function PetList() {
 
     async function getPetsForUser() {
         const token = localStorage.getItem("accessToken");
-        if (!token) {
-            navigate('/login')
-        }
         try {
-            const response = await callApi('GET', import.meta.env.VITE_API_URL, '/pets/user/' + jwtDecode(token).id, null, token);
+            const response = await callApi('GET', import.meta.env.VITE_API_URL, '/pets/user/' + user.id, null, token);
             if (response.error) {
                 console.error(response.error);
             }

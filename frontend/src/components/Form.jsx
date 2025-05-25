@@ -19,7 +19,6 @@ export default function Form({ title, fields, submitCallback, error, submitText 
     function updateValue(name, value) {
         let newValues = structuredClone(values);
         newValues[name] = value;
-        console.log(JSON.stringify(newValues));
         setValues(newValues);
     }
 
@@ -58,7 +57,6 @@ export default function Form({ title, fields, submitCallback, error, submitText 
     )
 
     async function submitHandler(e) {
-        console.log("SubmitHandler called with: " + values);
         e.preventDefault();
         await submitCallback(values);
         setValues(defaultValues);

@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import Form from "./Form";
 import callApi from "../utils/callApi";
+import { UserContext } from "../context/UserContext";
+import { jwtDecode } from "jwt-decode";
 
 export default function Login() {
+
+    const { user, setUser } = useContext(UserContext);
 
     const navigate = useNavigate();
 
@@ -43,6 +47,11 @@ export default function Login() {
         try {
             const response = await callApi('POST', import.meta.env.VITE_API_URL, "/auth/token", requestBody);
             if (response.accessToken) {
+                const decoded = jwtDecode(response.accessToken);
+                setUser({
+                    id:  decoded.id,
+                    email: decoded.email
+                })
                 localStorage.setItem("accessToken", response.accessToken);
                 localStorage.setItem("refreshToken", response.refreshToken);
                 navigate('/');

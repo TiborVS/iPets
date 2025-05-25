@@ -68,7 +68,7 @@ module.exports = {
             this.species = species;
             this.userId = userId;
             this.breed = breed;
-            this.birthday = birthday;
+            this.birthday = birthday.toISOString().split('T')[0]; // converts date type to ISO date string (YYYY-MM-DD)
             this.imageId = imageId;
             this.id = id;
         }

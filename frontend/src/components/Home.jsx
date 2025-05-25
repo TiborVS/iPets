@@ -1,14 +1,17 @@
-import LoginTest from "./LoginTest";
-import PetCard from "./PetCard";
+import { useContext } from "react";
 import PetList from "./PetList";
+import { UserContext } from "../context/UserContext";
+import { Navigate } from "react-router";
 
 export default function Home() {
 
-    return(
-        <>
-            <h1>Home</h1>
-            <LoginTest></LoginTest>
-            <PetList/>
-        </>
-    )
+    const { user, setUser } = useContext(UserContext);
+
+    if (user) {
+        return (<PetList />)
+    }
+    else {
+        //return (<Navigate to='/login' />)
+        return (<h1>Placeholder</h1>)
+    }
 }

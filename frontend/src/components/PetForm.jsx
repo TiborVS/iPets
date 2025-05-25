@@ -1,12 +1,14 @@
 import { useParams, useNavigate } from 'react-router';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Form from './Form';
 import callApi from '../utils/callApi';
+import { UserContext } from '../context/UserContext';
 
 export default function PetForm({isEditing}) {
 
     const params = useParams();
     const navigate = useNavigate();
+    const { user, setUser } = useContext(UserContext);
     const [error, setError] = useState("");
     const [formParams, setFormParams] = useState([
         {
@@ -74,7 +76,7 @@ export default function PetForm({isEditing}) {
                 species: formData.species,
                 breed: formData.breed,
                 birthday: formData.birthday,
-                userId: 1, // TEMP
+                userId: user.id, 
                 imageId: null // TEMP
             }
         };

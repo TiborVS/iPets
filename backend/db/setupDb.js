@@ -19,7 +19,7 @@ async function setupDb() {
             table.string('name').notNullable();
             table.string('species').notNullable();
             table.string('breed');
-            table.date('birthday');
+            table.string('birthday'); // sqlite does not support date types, will use ISO strings (YYYY-MM-DD), e.g. 2024-03-28
             table.integer('imageId');
             table.integer('userId').notNullable().references('id').inTable('users').onDelete('CASCADE');
         });

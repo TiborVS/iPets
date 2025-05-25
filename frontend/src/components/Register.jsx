@@ -47,7 +47,7 @@ export default function Register() {
         try {
             const response = await callApi('POST', import.meta.env.VITE_API_URL, "/users", requestBody);
             if (response.id) {
-                navigate('/');
+                navigate('/login');
             }
             else {
                 setError("Napaka: " + response.error);
