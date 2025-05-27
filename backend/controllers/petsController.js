@@ -37,12 +37,14 @@ module.exports = {
     getByUser: async function (userId) {
         if (isNaN(parseInt(userId))) throw new HttpError("ID must be an integer", 400);
         try {
-            const pet = await petModel.getByUser(userId);
-            if (pet && pet.imageId) {
-                let image = await imageModel.getById(pet.imageId);
-                pet.image = image.content;
+            const pets = await petModel.getByUser(userId);
+            for (let pet of pets) {
+                if (pet.imageId) {
+                    let image = await imageModel.getById(pet.imageId);
+                    pet.image = image.content;
+                }
             }
-            return pet;
+            return pets;
 
         }
         catch (err) {

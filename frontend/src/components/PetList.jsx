@@ -4,6 +4,7 @@ import { jwtDecode } from "jwt-decode";
 import PetCard from "./PetCard";
 import { Link, useNavigate } from "react-router";
 import { UserContext } from "../context/UserContext";
+import '../styles/PetList.css';
 
 export default function PetList() {
 

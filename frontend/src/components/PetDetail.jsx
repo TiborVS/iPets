@@ -30,7 +30,7 @@ export default function PetDetail() {
 
     return (pet && 
             <div className="container">
-                <img src={import.meta.env.VITE_API_URL + "/images/" + pet.imageId} alt={"Slika živali " + pet.name} />
+                <img src={pet.image} alt={"Slika živali " + pet.name} />
                 <h2>{pet.name}</h2>
                 <span>{pet.species} | {pet.breed}</span>
                 {pet.birthday && <p>Rojena {ISODateToSloveneString(pet.birthday)}</p>}
