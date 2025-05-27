@@ -75,6 +75,15 @@ async function setupDb() {
         console.log('Created table: refresh_tokens');
     }
 
+    const imagesExist = await knex.schema.hasTable('images');
+    if (!imagesExist) {
+        await knex.schema.createTable('images', (table) => {
+            table.increments('id').primary();
+            table.string('content').notNullable();
+        });
+        console.log('Created table: images');
+    }
+
     await knex.destroy();
     console.log('Database setup complete.');
 }
