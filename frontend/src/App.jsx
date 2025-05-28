@@ -21,6 +21,9 @@ import MedicationsPage from './components/MedicationsPage';
 import AddMedicationForm from './components/AddMedicationForm';
 import EditMedicationForm from './components/EditMedicationForm';
 
+import { requestNotificationPermission } from "./utils/notifications";
+
+
 export default function App() {
 
     const [user, setUser] = useState(null);
@@ -35,6 +38,9 @@ export default function App() {
                 email: decoded.email
             });
         }
+        setTimeout(() => {
+            requestNotificationPermission();
+        }, 1000);
         setReady(true);
     }, [])
 
