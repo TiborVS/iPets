@@ -14,7 +14,13 @@ module.exports = {
     },
 
     getByPet: async function (petId) {
-        return await knex('medical_treatments').where({ petId });
+        return knex('medical_treatments')
+            .join('medications', 'medical_treatments.medicationId', 'medications.id')
+            .select(
+                'medical_treatments.*',
+                'medications.name as medicationName'
+            )
+            .where('medical_treatments.petId', petId);
     },
 
     insert: async function (treatment) {

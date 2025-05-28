@@ -10,6 +10,7 @@ export default function PetList() {
 
     const { user, setUser } = useContext(UserContext);
     const [pets, setPets] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         getPetsForUser();
@@ -37,6 +38,7 @@ export default function PetList() {
         {pets && pets.map((pet) => 
             <PetCard key={pet.id} pet={pet} />
         )}
+        <button onClick={() => navigate("/medications")}>Dodaj zdravilo</button>
         </>
     )
 

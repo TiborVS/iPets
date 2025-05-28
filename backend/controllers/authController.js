@@ -34,7 +34,7 @@ module.exports = {
                 process.env.JWT_SECRET,
                 { expiresIn: '7d' }
             );
-            refreshModel.insert(user.id, refreshToken);
+            await refreshModel.insert(user.id, refreshToken);
             return {accessToken, refreshToken};
         } catch (err) {
             throw new HttpError(err.message, 500);

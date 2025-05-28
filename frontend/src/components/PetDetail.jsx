@@ -35,6 +35,13 @@ export default function PetDetail() {
                 <span>{pet.species} | {pet.breed}</span>
                 {pet.birthday && <p>Rojena {ISODateToSloveneString(pet.birthday)}</p>}
                 <p><Link to={"/pets/edit/" + pet.id}>Uredi</Link><DeletePet pet={pet}/></p>
+
+                <Link to={`/pets/${pet.id}/visits`}>
+                    <button>Veterinarski obiski</button>
+                </Link>
+                <Link to={`/pets/${pet.id}/treatments`}>
+                    <button>Zdravstveni zapisi</button>
+                </Link>
             </div>
     )
 }
