@@ -1,28 +1,30 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import callApi from "../utils/callApi.js";
 
-const AddFood = () => {
-    const [category, setCategory] = useState('');
-    const [name, setName] = useState('');
+const AddFood = ({ food = null }) => {
+    const [category, setCategory] = useState(food?.category || '');
+    const [name, setName] = useState(food?.name || '');
     const [loading, setLoading] = useState(false);
     const apiBase = import.meta.env.VITE_API_URL;
     const token = localStorage.getItem("accessToken");
 
+    const isEditing = !!food;
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        if (!category) {
-            return;
-        }
+        if (!category || !name) return;
 
         setLoading(true);
 
         try {
-            const req = {
-                category: category,
-                name: name,
+            const req = { category, name };
+
+            if (isEditing) {
+                await callApi('PUT', apiBase, `/food/${food.id}`, req, token);
+            } else {
+                await callApi('POST', apiBase, '/food', req, token);
             }
-            await callApi('POST', apiBase, '/food', req, token);
+
             setCategory('');
             setName('');
         } catch (err) {
@@ -34,30 +36,28 @@ const AddFood = () => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <h2>Add Food</h2>
+            <h2>{isEditing ? 'Uredi hrano' : 'Dodaj hrano'}</h2>
 
-            <label>Category</label>
+            <label>Kategorija</label>
             <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
                 required
             >
                 <option value="">Select...</option>
-                <option value="FOOD">FOOD</option>
-                <option value="SNACK">SNACK</option>
+                <option value="FOOD">Hrana</option>
+                <option value="SNACK">Prigrizek</option>
             </select>
+
+            <label>Ime</label>
             <input
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-            >
+                required
+            />
 
-            </input>
-
-            <button
-                type="submit"
-                disabled={loading}
-            >
-                {loading ? 'Adding...' : 'Add Food'}
+            <button type="submit" disabled={loading}>
+                {loading ? (isEditing ? 'Posodabljanje...' : 'Dodajanje...') : (isEditing ? 'Posodobi hrano' : 'Dodaj hrano')}
             </button>
         </form>
     );

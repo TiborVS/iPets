@@ -36,6 +36,7 @@ export default function PetList() {
         <>
             <Link to="/pets/new">Dodaj žival</Link>
             <Link to="/food">Dodaj Hrano</Link>
+            <Link to="/food/all">Moja hrana</Link>
             {pets && pets.map((pet) =>
                 <PetCard key={pet.id} pet={pet} />
             )}
