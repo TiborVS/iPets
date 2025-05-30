@@ -9,7 +9,12 @@ module.exports = {
             for (let pet of pets) {
                 if (pet.imageId) {
                     let image = await imageModel.getById(pet.imageId);
-                    pet.image = image.content;
+                    if (!image) {
+                        console.error("petsController: Error getting image from database");
+                    }
+                    else {
+                        pet.image = image.content;
+                    }
                 }
             }
             return pets;
@@ -25,7 +30,12 @@ module.exports = {
             const pet = await petModel.getById(id);
             if (pet && pet.imageId) {
                 let image = await imageModel.getById(pet.imageId);
-                pet.image = image.content;
+                if (!image) {
+                    console.error("petsController: Error getting image from database");
+                }
+                else {
+                    pet.image = image.content;
+                }
             }
             return pet;
         }
@@ -41,7 +51,12 @@ module.exports = {
             for (let pet of pets) {
                 if (pet.imageId) {
                     let image = await imageModel.getById(pet.imageId);
-                    pet.image = image.content;
+                    if (!image) {
+                        console.error("petsController: Error getting image from database");
+                    }
+                    else {
+                        pet.image = image.content;
+                    }
                 }
             }
             return pets;
@@ -59,7 +74,7 @@ module.exports = {
         if (isNaN(parseInt(userId))) throw new HttpError("ID must be an integer", 400);
         try {
             if (pet.image) {
-                let newImage = new imageModel.Image(pet.image);
+                let newImage = new imageModel.Image(pet.image.content);
                 let insertedImage = await imageModel.insert(newImage);
                 if (!insertedImage) throw new HttpError("Error inserting pet - failed to insert image", 500);
                 delete pet.image;
@@ -83,7 +98,7 @@ module.exports = {
         }
         try {
             if (pet.image) {
-                let newImage = new imageModel.Image(pet.image);
+                let newImage = new imageModel.Image(pet.image.content);
                 let insertedImage = await imageModel.insert(newImage);
                 if (!insertedImage) throw new HttpError("Error inserting pet - failed to insert image", 500);
                 delete pet.image;
