@@ -1,0 +1,76 @@
+import React, {useEffect, useState} from 'react';
+import callApi from "../utils/callApi.js";
+import {useNavigate} from 'react-router-dom';
+
+const FoodList = () => {
+    const [foods, setFoods] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    const apiBase = import.meta.env.VITE_API_URL;
+    const token = localStorage.getItem("accessToken");
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        fetchFoods();
+    }, []);
+
+    const fetchFoods = async () => {
+        try {
+            const data = await callApi('GET', apiBase, '/food', null, token);
+            setFoods(data);
+        } catch (err) {
+            console.error("Failed to fetch foods", err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleDelete = async (id) => {
+        if (!window.confirm("Ste prepričani da želite odstraniti hrano?")) return;
+
+        try {
+            await callApi('DELETE', apiBase, `/food/${id}`, null, token);
+            setFoods(currentFoods => currentFoods.filter(f => f.id !== id));
+        } catch (err) {
+            console.error("Failed to delete food", err);
+        }
+    };
+
+    const handleEdit = (id) => {
+        navigate(`/food/edit/${id}`);
+    };
+
+    const handleAdd = () => {
+        navigate('/food/add');
+    };
+
+    return (
+        <div>
+            <h2>Hrana in prigrizki</h2>
+
+            <button onClick={handleAdd} style={{marginBottom: '15px'}}>
+                Dodaj hrano
+            </button>
+
+            {loading && <p>Nalaganje...</p>}
+
+            {!loading && foods.length === 0 && <p>Ni dodane hrane</p>}
+
+            {!loading && foods.length > 0 && (
+                <ul>
+                    {foods.map((food) => (
+                        <li key={food.id} style={{marginBottom: '20px'}}>
+                            <div>{food.name} ({food.category === "FOOD" ? "Hrana" : "Prigrizek"})</div>
+                            <div style={{marginTop: '8px', display: 'flex', gap: '8px'}}>
+                                <button onClick={() => handleEdit(food.id)}>Uredi</button>
+                                <button onClick={() => handleDelete(food.id)}>Izbriši</button>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+            )}
+        </div>
+    );
+};
+
+export default FoodList;

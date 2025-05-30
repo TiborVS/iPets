@@ -34,11 +34,12 @@ export default function PetList() {
 
     return (
         <>
-        <Link to="/pets/new">Dodaj žival</Link>
-        {pets && pets.map((pet) => 
-            <PetCard key={pet.id} pet={pet} />
-        )}
-        <button onClick={() => navigate("/medications")}>Dodaj zdravilo</button>
+            <Link to="/pets/new">Dodaj žival</Link>
+            <Link to="/food/all">Moja hrana</Link>
+            {pets && pets.map((pet) =>
+                <PetCard key={pet.id} pet={pet} />
+            )}
+            <button onClick={() => navigate("/medications")}>Dodaj zdravilo</button>
         </>
     )
 

@@ -15,6 +15,7 @@ const petsRouter = require('./routes/petsRouter');
 const visitsRouter = require('./routes/visitsRouter');
 const treatmentsRouter = require('./routes/treatmentsRouter');
 const medicationsRouter = require('./routes/medicationsRouter');
+const foodRouter = require('./routes/foodRouter');
 const authRouter = require('./routes/authRouter');
 
 app.use('/users', usersRouter);
@@ -22,6 +23,7 @@ app.use('/pets', petsRouter);
 app.use('/visits', visitsRouter);
 app.use('/treatments', treatmentsRouter);
 app.use('/medications', medicationsRouter);
+app.use('/food', foodRouter);
 app.use('/auth', authRouter);
 
 app.listen(port, () => {

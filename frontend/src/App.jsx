@@ -24,6 +24,9 @@ import EditMedicationForm from './components/EditMedicationForm';
 import { requestNotificationPermission } from "./utils/notifications";
 import ShortcutHandler from "./components/ShortcutHandler";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import AddFood from "./components/AddFood.jsx";
+import FoodList from "./components/FoodList.jsx";
+import FeedingForm from "./components/FeedingForm.jsx";
 
 
 export default function App() {
@@ -71,6 +74,12 @@ export default function App() {
                                     <Route path="/pets/:id/treatments" element={<PetMedicalTreatmentsPage />} />
                                     <Route path="/pets/:id/treatments/add" element={<AddMedicalTreatmentForm />} />
                                     <Route path="/pets/:id/treatments/edit/:treatmentId" element={<EditMedicalTreatmentForm />} />
+                                </Route>
+                                <Route path="food">
+                                    <Route index path="/food/all" element={<FoodList />} />
+                                    <Route path="/food/add" element={<AddFood />} />
+                                    <Route path="/food/edit/:id" element={<AddFood />} />
+                                    <Route path="/food/feed/:petId" element={<FeedingForm />} />
                                 </Route>
                             </Route>
                         </Route>
