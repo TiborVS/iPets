@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import callApi from "../utils/callApi.js";
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 const FoodList = () => {
     const [foods, setFoods] = useState([]);
@@ -48,7 +48,7 @@ const FoodList = () => {
         <div>
             <h2>Hrana in prigrizki</h2>
 
-            <button onClick={handleAdd} style={{ marginBottom: '15px' }}>
+            <button onClick={handleAdd} style={{marginBottom: '15px'}}>
                 Dodaj hrano
             </button>
 
@@ -59,17 +59,12 @@ const FoodList = () => {
             {!loading && foods.length > 0 && (
                 <ul>
                     {foods.map((food) => (
-                        <li key={food.id}>
-                            {food.name} ({food.category === "FOOD" ? "Hrana" : "Prigrizek"})
-                            <button onClick={() => handleEdit(food.id)} style={{ marginLeft: '10px' }}>
-                                Uredi
-                            </button>
-                            <button
-                                onClick={() => handleDelete(food.id)}
-                                style={{ marginLeft: '5px' }}
-                            >
-                                Izbriši
-                            </button>
+                        <li key={food.id} style={{marginBottom: '20px'}}>
+                            <div>{food.name} ({food.category === "FOOD" ? "Hrana" : "Prigrizek"})</div>
+                            <div style={{marginTop: '8px', display: 'flex', gap: '8px'}}>
+                                <button onClick={() => handleEdit(food.id)}>Uredi</button>
+                                <button onClick={() => handleDelete(food.id)}>Izbriši</button>
+                            </div>
                         </li>
                     ))}
                 </ul>
