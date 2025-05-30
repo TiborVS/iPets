@@ -106,4 +106,31 @@ router.get('/:id', authenticateToken, async (req, res) => {
     }
 });
 
+router.post('/feeding', async (req, res) => {
+    try {
+        const { petId, foodId, feedingTime } = req.body;
+
+        if (!petId || !foodId || !feedingTime) {
+            return res.status(400).json({ error: 'petId, foodId and feedingTime are required' });
+        }
+
+        // Convert feedingTime (ISO string) to epoch milliseconds (or seconds)
+        const epochTime = new Date(feedingTime).getTime();
+        if (isNaN(epochTime)) {
+            return res.status(400).json({ error: 'Invalid feedingTime format' });
+        }
+
+        const [newId] = await knex('feeding').insert({
+            petId,
+            foodId,
+            time: epochTime,
+        });
+
+        res.status(201).json({ message: 'Feeding added', id: newId });
+    } catch (error) {
+        console.error('Error adding feeding:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 module.exports = router;

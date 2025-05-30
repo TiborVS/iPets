@@ -24,6 +24,7 @@ import EditMedicationForm from './components/EditMedicationForm';
 import { requestNotificationPermission } from "./utils/notifications";
 import AddFood from "./components/AddFood.jsx";
 import FoodList from "./components/FoodList.jsx";
+import FeedingForm from "./components/FeedingForm.jsx";
 
 
 export default function App() {
@@ -75,6 +76,7 @@ export default function App() {
                                     <Route index path="/food/all" element={<FoodList />} />
                                     <Route path="/food/add" element={<AddFood />} />
                                     <Route path="/food/edit/:id" element={<AddFood />} />
+                                    <Route path="/food/feed/:petId" element={<FeedingForm />} />
                                 </Route>
                             </Route>
                         </Route>
