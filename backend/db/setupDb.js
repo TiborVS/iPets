@@ -84,6 +84,28 @@ async function setupDb() {
         console.log('Created table: images');
     }
 
+    const foodExist = await knex.schema.hasTable('food');
+    if (!foodExist) {
+        await knex.schema.createTable('food', (table) => {
+            table.increments('id').primary();
+            table.enu('category', ['SNACK', 'FOOD']).notNullable();
+            table.string('name').notNullable();
+            table.integer('userId').notNullable().references('id').inTable('users').onDelete('CASCADE');
+        });
+        console.log('Created table: food');
+    }
+
+    const feedingExist = await knex.schema.hasTable('feeding');
+    if (!feedingExist) {
+        await knex.schema.createTable('feeding', (table) => {
+            table.increments('id').primary();
+            table.integer('petId').notNullable().references('id').inTable('pets').onDelete('CASCADE');
+            table.integer('foodId').notNullable().references('id').inTable('food').onDelete('CASCADE');
+            table.bigInteger('time').notNullable(); // epoch time
+        });
+        console.log('Created table: feeding');
+    }
+
     await knex.destroy();
     console.log('Database setup complete.');
 }

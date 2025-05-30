@@ -22,6 +22,7 @@ import AddMedicationForm from './components/AddMedicationForm';
 import EditMedicationForm from './components/EditMedicationForm';
 
 import { requestNotificationPermission } from "./utils/notifications";
+import AddFood from "./components/AddFood.jsx";
 
 
 export default function App() {
@@ -68,6 +69,9 @@ export default function App() {
                                     <Route path="/pets/:id/treatments" element={<PetMedicalTreatmentsPage />} />
                                     <Route path="/pets/:id/treatments/add" element={<AddMedicalTreatmentForm />} />
                                     <Route path="/pets/:id/treatments/edit/:treatmentId" element={<EditMedicalTreatmentForm />} />
+                                </Route>
+                                <Route path="food">
+                                    <Route index element={<AddFood />} />
                                 </Route>
                             </Route>
                         </Route>
