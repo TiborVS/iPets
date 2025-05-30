@@ -63,6 +63,7 @@ router.delete('/:id', authenticateToken, async (req, res) => {
             return res.status(404).json({ error: 'Food not found or not owned by user' });
         }
 
+        res.json({});
         return res.status(204).send();
     } catch (err) {
         console.error('Error deleting food:', err);
@@ -81,6 +82,26 @@ router.get('/', authenticateToken, async (req, res) => {
         return res.status(200).json(foods);
     } catch (err) {
         console.error('Error fetching food:', err);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+router.get('/:id', authenticateToken, async (req, res) => {
+    const userId = req.user.id;
+    const { id } = req.params;
+
+    try {
+        const food = await knex('food')
+            .where({ id, userId })
+            .first();
+
+        if (!food) {
+            return res.status(404).json({ error: 'Food not found' });
+        }
+
+        return res.status(200).json(food);
+    } catch (err) {
+        console.error('Error fetching food by ID:', err);
         return res.status(500).json({ error: 'Internal server error' });
     }
 });

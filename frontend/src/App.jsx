@@ -72,8 +72,9 @@ export default function App() {
                                     <Route path="/pets/:id/treatments/edit/:treatmentId" element={<EditMedicalTreatmentForm />} />
                                 </Route>
                                 <Route path="food">
-                                    <Route index element={<AddFood />} />
-                                    <Route path="/food/all" element={<FoodList />} />
+                                    <Route index path="/food/all" element={<FoodList />} />
+                                    <Route path="/food/add" element={<AddFood />} />
+                                    <Route path="/food/edit/:id" element={<AddFood />} />
                                 </Route>
                             </Route>
                         </Route>

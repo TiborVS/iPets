@@ -1,14 +1,38 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import callApi from "../utils/callApi.js";
+import { useParams } from 'react-router-dom';
 
-const AddFood = ({ food = null }) => {
-    const [category, setCategory] = useState(food?.category || '');
-    const [name, setName] = useState(food?.name || '');
+const AddFood = () => {
+    const { id } = useParams(); // <-- get food id from route
+    const [category, setCategory] = useState('');
+    const [name, setName] = useState('');
     const [loading, setLoading] = useState(false);
+    const [initializing, setInitializing] = useState(true);
+
     const apiBase = import.meta.env.VITE_API_URL;
     const token = localStorage.getItem("accessToken");
 
-    const isEditing = !!food;
+    const isEditing = !!id;
+    console.log(isEditing);
+    console.log(id);
+    useEffect(() => {
+        if (isEditing) {
+            const fetchFood = async () => {
+                try {
+                    const food = await callApi('GET', apiBase, `/food/${id}`, null, token);
+                    setCategory(food.category);
+                    setName(food.name);
+                } catch (err) {
+                    console.error('Error fetching food:', err);
+                } finally {
+                    setInitializing(false);
+                }
+            };
+            fetchFood();
+        } else {
+            setInitializing(false);
+        }
+    }, [id]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -20,7 +44,7 @@ const AddFood = ({ food = null }) => {
             const req = { category, name };
 
             if (isEditing) {
-                await callApi('PUT', apiBase, `/food/${food.id}`, req, token);
+                await callApi('PUT', apiBase, `/food/${id}`, req, token);
             } else {
                 await callApi('POST', apiBase, '/food', req, token);
             }
@@ -33,6 +57,8 @@ const AddFood = ({ food = null }) => {
             setLoading(false);
         }
     };
+
+    if (initializing) return <p>Nalaganje...</p>;
 
     return (
         <form onSubmit={handleSubmit}>
