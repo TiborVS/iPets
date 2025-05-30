@@ -22,6 +22,8 @@ import AddMedicationForm from './components/AddMedicationForm';
 import EditMedicationForm from './components/EditMedicationForm';
 
 import { requestNotificationPermission } from "./utils/notifications";
+import ShortcutHandler from "./components/ShortcutHandler";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import AddFood from "./components/AddFood.jsx";
 import FoodList from "./components/FoodList.jsx";
 import FeedingForm from "./components/FeedingForm.jsx";
@@ -51,6 +53,7 @@ export default function App() {
         return (
             <UserContext value={{user, setUser}}>
                 <BrowserRouter>
+                    <ShortcutHandler />
                     <Routes>
                         <Route element={<HeaderLayout title={"iPets"} />}>
                             <Route index element={<Home />} />
