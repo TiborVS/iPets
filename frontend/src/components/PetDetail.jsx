@@ -8,6 +8,8 @@ export default function PetDetail() {
     const params = useParams();
     const navigate = useNavigate();
     const [pet, setPet] = useState(null);
+    const [feedings, setFeedings] = useState([]);
+    const [loadingFeedings, setLoadingFeedings] = useState(true);
 
     useEffect(() => {
         async function getPetData() {
@@ -23,7 +25,25 @@ export default function PetDetail() {
                 console.error(err);
             }
         }
+
+        async function getFeedings() {
+            const token = localStorage.getItem("accessToken");
+            try {
+                const response = await callApi('GET', import.meta.env.VITE_API_URL, `/food/pet/${params.id}/feedings`, null, token);
+                if (!response.error) {
+                    setFeedings(response);
+                } else {
+                    console.error(response.error);
+                }
+            } catch (err) {
+                console.error(err);
+            } finally {
+                setLoadingFeedings(false);
+            }
+        }
+
         getPetData();
+        getFeedings();
     }, [params.id]);
 
     const handleAddFeeding = () => {
@@ -52,6 +72,23 @@ export default function PetDetail() {
             <button onClick={handleAddFeeding} style={{ marginTop: '10px' }}>
                 Dodaj hranjenje
             </button>
+
+            <section style={{ marginTop: '20px' }}>
+                <h3>Zgodovina hranjenj</h3>
+                {loadingFeedings ? (
+                    <p>Nalaganje hranjenj...</p>
+                ) : feedings.length === 0 ? (
+                    <p>Za to žival še ni dodanih hranjenj.</p>
+                ) : (
+                    <ul>
+                        {feedings.map((feeding) => (
+                            <li key={feeding.id}>
+                                {new Date(feeding.time).toLocaleString('sl-SI')} - {feeding.foodName}
+                            </li>
+                        ))}
+                    </ul>
+                )}
+            </section>
         </div>
     );
 }

@@ -106,7 +106,7 @@ router.get('/:id', authenticateToken, async (req, res) => {
     }
 });
 
-router.post('/feeding', async (req, res) => {
+router.post('/feeding', authenticateToken, async (req, res) => {
     try {
         const { petId, foodId, feedingTime } = req.body;
 
@@ -129,6 +129,34 @@ router.post('/feeding', async (req, res) => {
         res.status(201).json({ message: 'Feeding added', id: newId });
     } catch (error) {
         console.error('Error adding feeding:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+
+router.get('/pet/:petId/feedings', authenticateToken, async (req, res) => {
+    const { petId } = req.params;
+    const userId = req.user.id; // from your auth middleware
+
+    try {
+        // First check if pet belongs to this user
+        const pet = await knex('pets')
+            .select("id", "userId")
+            .where({ id: petId, userId }).first();
+        if (!pet) {
+            return res.status(404).json({ error: 'Pet not found or access denied' });
+        }
+
+        // Get feedings for this pet, join with food table to get food name
+        const feedings = await knex('feeding')
+            .where('feeding.petId', petId)
+            .join('food', 'feeding.foodId', 'food.id')
+            .select('feeding.id', 'feeding.time', 'food.name as foodName')
+            .orderBy('feeding.time', 'desc');
+
+        res.json(feedings);
+    } catch (error) {
+        console.error('Error fetching feedings:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
