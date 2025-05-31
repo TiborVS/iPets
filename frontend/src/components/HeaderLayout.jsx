@@ -2,6 +2,7 @@ import { Fragment, useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import { Link, Outlet } from "react-router";
 import LogoutButton from "./LogoutButton"
+import VoiceControl from "./VoiceControl.jsx";
 
 export default function HeaderLayout({ title }) {
     const { user, setUser } = useContext(UserContext);
@@ -13,6 +14,7 @@ export default function HeaderLayout({ title }) {
                 {user && <>
                     <span>Prijavljeni ste kot {user.email}</span>
                     <LogoutButton />
+                    <VoiceControl />
                 </>
                 }
                 {!user && <>
