@@ -63,7 +63,6 @@ router.delete('/:id', authenticateToken, async (req, res) => {
             return res.status(404).json({ error: 'Food not found or not owned by user' });
         }
 
-        res.json({});
         return res.status(204).send();
     } catch (err) {
         console.error('Error deleting food:', err);
