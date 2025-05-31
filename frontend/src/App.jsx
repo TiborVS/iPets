@@ -10,7 +10,6 @@ import { useState, useEffect } from "react";
 import { UserContext } from "./context/UserContext";
 import { jwtDecode } from "jwt-decode";
 import LoginGate from "./components/LoginGate";
-
 import PetVisitsPage from './components/PetVisitsPage';
 import AddVisitForm from './components/AddVisitForm';
 import EditVisitForm from './components/EditVisitForm';
@@ -20,10 +19,9 @@ import EditMedicalTreatmentForm from './components/EditMedicalTreatmentForm';
 import MedicationsPage from './components/MedicationsPage';
 import AddMedicationForm from './components/AddMedicationForm';
 import EditMedicationForm from './components/EditMedicationForm';
-
 import { requestNotificationPermission } from "./utils/notifications";
 import ShortcutHandler from "./components/ShortcutHandler";
-import 'bootstrap/dist/css/bootstrap.min.css';
+//import 'bootstrap/dist/css/bootstrap.min.css';
 import AddFood from "./components/AddFood.jsx";
 import FoodList from "./components/FoodList.jsx";
 import FeedingForm from "./components/FeedingForm.jsx";

@@ -37,6 +37,11 @@ export default function PetForm({isEditing}) {
             type: "date",
             displayName: "Datum rojstva",
             default: ""
+        },
+        {
+            name: "image",
+            type: "file",
+            displayName: "Slika živali"
         }
     ]);
 
@@ -77,7 +82,9 @@ export default function PetForm({isEditing}) {
                 breed: formData.breed,
                 birthday: formData.birthday,
                 userId: user.id, 
-                imageId: null // TEMP
+                image: {
+                    content: formData.image
+                } 
             }
         };
         try {
