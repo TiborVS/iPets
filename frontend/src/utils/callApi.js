@@ -11,12 +11,19 @@ async function callApi(method, url, endpoint, body, token) {
     options.headers = headers;
     options.method = method;
     const fetchResponse = await fetch(url + endpoint, options);
+    if (fetchResponse.status === 204) {
+        return null;
+    }
+
     const responseJson = await fetchResponse.json();
     if (!fetchResponse.ok && fetchResponse.status == 401) {
         try {
             await refreshAccessToken(url);
             options.headers["Authorization"] = "Bearer " + localStorage.getItem("accessToken");
             const retryResponse = await fetch(url + endpoint, options);
+            if (retryResponse.status === 204) {
+                return null;
+            }
             const retryJson = await retryResponse.json();
             if (retryResponse.ok) return retryJson;
             else throw new Error(retryJson.error);
