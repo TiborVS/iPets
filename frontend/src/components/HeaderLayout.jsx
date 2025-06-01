@@ -1,30 +1,35 @@
-import { Fragment, useContext, useState } from "react";
-import { UserContext } from "../context/UserContext";
-import { Link, Outlet } from "react-router";
+import {Fragment, useContext, useState} from "react";
+import {UserContext} from "../context/UserContext";
+import {Link, Outlet} from "react-router";
 import LogoutButton from "./LogoutButton";
 import VoiceControl from "./VoiceControl.jsx";
-import { offWhite, primaryColor } from "../utils/Theme.js";
+import {offWhite, primaryColor} from "../utils/Theme.js";
 
 const navbarWrapperStyle = {
     width: '100%',
+    height: '70px',
     backgroundColor: primaryColor,
-    padding: '15px 30px',
+    padding: '0 30px',
     boxSizing: 'border-box',
     fontFamily: 'Arial, sans-serif',
     color: offWhite,
-    position: 'relative',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+};
+
+const navbarLeftStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '30px',
 };
 
 const navbarInnerStyle = {
     display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'relative',
+    gap: '30px',
 };
 
 const titleStyle = {
-    position: 'absolute',
-    left: '30px',
     color: offWhite,
     fontWeight: 'bold',
     fontSize: '1.4rem',
@@ -48,15 +53,13 @@ const linkStyle = {
 };
 
 const userContainerStyle = {
-    position: 'absolute',
-    right: '30px',
     display: 'flex',
     alignItems: 'center',
     gap: '15px',
 };
 
-export default function HeaderLayout({ title }) {
-    const { user } = useContext(UserContext);
+export default function HeaderLayout({title}) {
+    const {user} = useContext(UserContext);
     const [hoveredLink, setHoveredLink] = useState(null);
 
     const getLinkStyle = (linkName) => {
@@ -73,57 +76,56 @@ export default function HeaderLayout({ title }) {
     return (
         <>
             <div style={navbarWrapperStyle}>
-                <div style={navbarInnerStyle}>
+                <div style={navbarLeftStyle}>
                     <Link to="/" style={titleStyle}>{title}</Link>
+                    {user && (
+                        <div style={linkContainerStyle}>
+                            <Link
+                                to="/pets"
+                                style={getLinkStyle('pets')}
+                                onMouseEnter={() => setHoveredLink('pets')}
+                                onMouseLeave={() => setHoveredLink(null)}
+                            >
+                                Živali
+                            </Link>
+                            <Link
+                                to="/medications"
+                                style={getLinkStyle('medications')}
+                                onMouseEnter={() => setHoveredLink('medications')}
+                                onMouseLeave={() => setHoveredLink(null)}
+                            >
+                                Zdravila
+                            </Link>
+                            <Link
+                                to="/food/all"
+                                style={getLinkStyle('food')}
+                                onMouseEnter={() => setHoveredLink('food')}
+                                onMouseLeave={() => setHoveredLink(null)}
+                            >
+                                Hrana
+                            </Link>
+                        </div>
+                    )}
+                </div>
 
-                    <div style={linkContainerStyle}>
-                        <Link
-                            to="/pets"
-                            style={getLinkStyle('pets')}
-                            onMouseEnter={() => setHoveredLink('pets')}
-                            onMouseLeave={() => setHoveredLink(null)}
-                        >
-                            Živali
-                        </Link>
-
-                        <Link
-                            to="/medications"
-                            style={getLinkStyle('medications')}
-                            onMouseEnter={() => setHoveredLink('medications')}
-                            onMouseLeave={() => setHoveredLink(null)}
-                        >
-                            Zdravila
-                        </Link>
-
-                        <Link
-                            to="/food/all"
-                            style={getLinkStyle('food')}
-                            onMouseEnter={() => setHoveredLink('food')}
-                            onMouseLeave={() => setHoveredLink(null)}
-                        >
-                            Hrana
-                        </Link>
-                    </div>
-
-                    <div style={userContainerStyle}>
-                        {user ? (
-                            <>
-                                <span>Prijavljeni ste kot {user.email}</span>
-                                <LogoutButton />
-                            </>
-                        ) : (
-                            <>
-                                <Link to="/login" style={linkStyle}>Prijava</Link>
-                                <Link to="/register" style={linkStyle}>Registracija</Link>
-                            </>
-                        )}
-                    </div>
+                <div style={userContainerStyle}>
+                    {user ? (
+                        <>
+                            <span>Prijavljeni ste kot {user.email}</span>
+                            <LogoutButton />
+                        </>
+                    ) : (
+                        <>
+                            <Link to="/login" style={linkStyle}>Prijava</Link>
+                            <Link to="/register" style={linkStyle}>Registracija</Link>
+                        </>
+                    )}
                 </div>
             </div>
 
-            {user ? (<VoiceControl />) : null}
-            <hr />
-            <Outlet />
+            {user ? (<VoiceControl/>) : null}
+            <hr/>
+            <Outlet/>
         </>
     );
 }
