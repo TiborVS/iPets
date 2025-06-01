@@ -23,6 +23,9 @@ export default function ShortcutHandler() {
             if (e.shiftKey && e.key === "M") {
                 navigate("/medications/add");
             }
+            if (e.shiftKey && e.key === "F") {
+                navigate("/food/add");
+            }
         };
 
         document.addEventListener("keydown", keyboardShortcut);
