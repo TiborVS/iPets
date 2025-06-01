@@ -32,7 +32,7 @@ const VoiceControl = () => {
     return (
         <div style={{ textAlign: 'center'}}>
             <button
-                onClick={SpeechRecognition.startListening}
+                onClick={() => {SpeechRecognition.startListening({language: 'sl'})}}
                 disabled={listening}
             >
                 {listening ? 'Poslušam...' : 'Začni poslušati'}
