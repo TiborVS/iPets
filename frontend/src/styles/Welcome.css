@@ -1,0 +1,11 @@
+.welcome h1 {
+    text-align: center;
+}
+
+.welcome p {
+    margin: 5em;
+}
+
+.welcome :nth-child(3) {
+    text-align: center;
+}
