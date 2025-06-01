@@ -1,4 +1,4 @@
-import {Fragment, useContext, useState} from "react";
+import {useContext, useState} from "react";
 import {UserContext} from "../context/UserContext";
 import {Link, Outlet} from "react-router";
 import LogoutButton from "./LogoutButton";
@@ -14,6 +14,7 @@ const navbarWrapperStyle = {
     fontFamily: 'Arial, sans-serif',
     color: offWhite,
     display: 'flex',
+    flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'space-between',
 };

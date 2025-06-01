@@ -2,6 +2,7 @@ import { useContext } from "react";
 import callApi from "../utils/callApi";
 import { useNavigate } from "react-router";
 import { UserContext } from "../context/UserContext";
+import '../styles/LogoutButton.css';
 
 export default function LogoutButton() {
 
@@ -23,7 +24,7 @@ export default function LogoutButton() {
     }
 
     return (
-        <button onClick={clickHandler}>Odjava</button>
+        <button className="logout-button" onClick={clickHandler}>Odjava</button>
     )
 
 }

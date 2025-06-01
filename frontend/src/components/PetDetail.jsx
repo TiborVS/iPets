@@ -4,6 +4,7 @@ import callApi from "../utils/callApi";
 import ISODateToSloveneString from "../utils/ISODateToSloveneString";
 import DeletePet from "./DeletePet";
 import {lightBackground, primaryColor} from "../utils/Theme.js";
+import '../styles/PetDetail.css'
 
 export default function PetDetail() {
     const params = useParams();
@@ -53,26 +54,29 @@ export default function PetDetail() {
 
     return (
         pet &&
-        <div className="container">
+        <div className="pet-detail container">
             <img src={pet.image} alt={"Slika živali " + pet.name} />
-            <h2>{pet.name}</h2>
-            <span>{pet.species} | {pet.breed}</span>
-            {pet.birthday && <p>Rojena {ISODateToSloveneString(pet.birthday)}</p>}
-            <p>
-                <Link to={"/pets/edit/" + pet.id}>Uredi</Link>
-                <DeletePet pet={pet} />
-            </p>
+            <div className="info">
+                <h2>{pet.name}</h2>
+                <p className="species breed">{pet.species} {(pet.breed ? "(" + pet.breed + ")" : "")}</p>
+                {pet.birthday && <p className="birthday">Rojena {ISODateToSloveneString(pet.birthday)}</p>}
+                <p className="modify">
+                    <button><Link to={"/pets/edit/" + pet.id}>Uredi</Link></button>
+                    <DeletePet pet={pet} />
+                </p>
 
-            <Link to={`/pets/${pet.id}/visits`}>
-                <button>Veterinarski obiski</button>
-            </Link>
-            <Link to={`/pets/${pet.id}/treatments`}>
-                <button>Zdravstveni zapisi</button>
-            </Link>
-
-            <button onClick={handleAddFeeding} style={{ marginTop: '10px' }}>
-                Dodaj hranjenje
-            </button>
+                <p className="links">
+                    <Link to={`/pets/${pet.id}/visits`}>
+                        <button>Veterinarski obiski</button>
+                    </Link>
+                    <Link to={`/pets/${pet.id}/treatments`}>
+                        <button>Zdravstveni zapisi</button>
+                    </Link>
+                    <button onClick={handleAddFeeding} style={{ marginTop: '10px' }}>
+                        Dodaj hranjenje
+                    </button>
+                </p>
+            </div>
 
             <section
                 style={{

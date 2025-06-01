@@ -1,0 +1,11 @@
+.logout-button {
+    border: none;
+    border-radius: 0.5em;
+    color: var(--off-white);
+    background-color: var(--primary-color);
+    padding: 0.5em;
+}
+
+.logout-button:hover {
+    filter: brightness(150%);
+}

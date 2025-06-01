@@ -1,0 +1,43 @@
+.pet-detail img {
+    width: 50vh;
+    height: 50vh;
+    object-fit: cover;
+    margin: auto;
+    display: block;
+    border-radius: 15%;
+}
+
+.pet-detail div.info {
+    width: fit-content;
+    margin: auto;
+    text-align: center;
+}
+
+.pet-detail button {
+    border: none;
+    border-radius: 0.5em;
+    padding: 0.5em;
+    margin: 0.5em;
+}
+
+.pet-detail button:hover {
+    cursor: pointer;
+    filter: brightness(150%);
+}
+
+.pet-detail button {
+    background-color: var(--primary-color);
+    color: var(--off-white);
+}
+
+.pet-detail button.delete-pet {
+    background-color: var(--button-del-bg);
+}
+
+.pet-detail section {
+    text-align: center;
+}
+
+.pet-detail section ul {
+    list-style-position: inside;
+}

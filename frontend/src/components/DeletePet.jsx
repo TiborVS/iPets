@@ -25,6 +25,6 @@ export default function DeletePet({ pet }) {
     }
 
     return (
-        <button type="button" onClick={promptDeletePet}>Odstrani</button>
+        <button type="button" className="delete-pet" onClick={promptDeletePet}>Odstrani</button>
     )
 }

@@ -1,5 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
-import React from "react";
+import '../styles/PetCard.css'
+import LazyImage from "./LazyImage";
+import { buttonStyles } from "../utils/Theme";
 
 export default function PetCard({ pet }) {
     const navigate = useNavigate();
@@ -9,21 +11,29 @@ export default function PetCard({ pet }) {
     };
 
     return (
-        <div className="pet">
-            <img src={pet.image} alt={"Slika živali " + pet.name} />
+        <div className="pet pet-card">
             <Link to={"/pets/" + pet.id}>
-                <p className="name">{pet.name}</p>
+                <LazyImage src={pet.image} alt={"Slika živali " + pet.name} />
             </Link>
-            <span className="species">{pet.species}</span>
-            <span> | </span>
-            <span className="breed">{pet.breed}</span>
+            <div className="pet-info pet-card">
+                <Link to={"/pets/" + pet.id}>
+                    <p className="name">{pet.name}</p>
+                </Link>
+                <p className="species breed">
+                    <span className="species">{pet.species}</span>
+                    {pet.breed &&
+                    <span className="breed"> ({pet.breed})</span>
+                    }
+                </p>
+                
 
-            <button
-                onClick={handleAddFeeding}
-                style={{ display: "block", marginTop: "10px" }}
-            >
-                Dodaj hranjenje
-            </button>
+                <button
+                    onClick={handleAddFeeding}
+                    style={buttonStyles.addButton}
+                >
+                    Dodaj hranjenje
+                </button>
+            </div>
         </div>
     );
 }
