@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import callApi from "../utils/callApi";
 import ISODateToSloveneString from "../utils/ISODateToSloveneString";
 import DeletePet from "./DeletePet";
+import {lightBackground, primaryColor} from "../utils/Theme.js";
 
 export default function PetDetail() {
     const params = useParams();
@@ -73,22 +74,38 @@ export default function PetDetail() {
                 Dodaj hranjenje
             </button>
 
-            <section style={{ marginTop: '20px' }}>
-                <h3>Zgodovina hranjenj</h3>
+            <section
+                style={{
+                    marginTop: '30px',
+                    padding: '20px',
+                    backgroundColor: lightBackground,
+                    borderRadius: '10px',
+                    boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
+                }}
+            >
+                <h3 style={{ marginBottom: '15px', color: primaryColor }}>Zgodovina hranjenj</h3>
                 {loadingFeedings ? (
                     <p>Nalaganje hranjenj...</p>
                 ) : feedings.length === 0 ? (
                     <p>Za to žival še ni dodanih hranjenj.</p>
                 ) : (
-                    <ul>
+                    <ul style={{ paddingLeft: '20px', margin: 0 }}>
                         {feedings.map((feeding) => (
-                            <li key={feeding.id}>
+                            <li
+                                key={feeding.id}
+                                style={{
+                                    marginBottom: '8px',
+                                    color: primaryColor,
+                                    fontSize: '15px',
+                                }}
+                            >
                                 {new Date(feeding.time).toLocaleString('sl-SI')} - {feeding.foodName}
                             </li>
                         ))}
                     </ul>
                 )}
             </section>
+
         </div>
     );
 }

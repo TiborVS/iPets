@@ -1,5 +1,6 @@
 export const primaryColor = '#2c3e50';
 export const offWhite = '#ecf0f1';
+export const lightBackground = '#f5f5f5'
 
 export const buttonStyles = {
     addButton: {
