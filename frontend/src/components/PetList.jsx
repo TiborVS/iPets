@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import callApi from "../utils/callApi";
-import { jwtDecode } from "jwt-decode";
 import PetCard from "./PetCard";
 import { Link, useNavigate } from "react-router";
 import { UserContext } from "../context/UserContext";
 import '../styles/PetList.css';
+import { buttonStyles } from "../utils/Theme";
 
 export default function PetList() {
 
@@ -33,13 +33,15 @@ export default function PetList() {
     }
 
     return (
-        <>
-            <Link to="/pets/new">Dodaj žival</Link>
+        <div className="pet-list">
+            <button style={buttonStyles.addButton} className="new-pet">
+                <Link to="/pets/new">Dodaj žival</Link>
+            </button>
             {pets && pets.map((pet) =>
                 <PetCard key={pet.id} pet={pet} />
             )}
             <button onClick={() => navigate("/medications")}>Dodaj zdravilo</button>
-        </>
+        </div>
     )
 
 }

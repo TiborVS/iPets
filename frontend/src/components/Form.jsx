@@ -1,4 +1,5 @@
 import { Fragment, useState, useMemo, useEffect, useRef } from "react"
+import { formStyles, buttonStyles } from "../utils/Theme";
 
 export default function Form({ title, fields, submitCallback, error, submitText }) {
 
@@ -33,12 +34,12 @@ export default function Form({ title, fields, submitCallback, error, submitText 
         }
         else if (textTypes.includes(field.type)) {
             return (
-                <input type={field.type} name={field.name} id={field.name} placeholder={field.placeholder} value={values[field.name]} onChange={(e) => {updateValue(field.name, e.target.value)}}></input>
+                <input style={formStyles.input} type={field.type} name={field.name} id={field.name} placeholder={field.placeholder} value={values[field.name]} onChange={(e) => {updateValue(field.name, e.target.value)}}></input>
             );
         }
         else if (field.type == "date") {
             return (
-                <input type="date" name={field.name} id={field.name} value={values[field.name]} onChange={(e) => { updateValue(field.name, e.target.value) }}></input>
+                <input style={formStyles.input} type="date" name={field.name} id={field.name} value={values[field.name]} onChange={(e) => { updateValue(field.name, e.target.value) }}></input>
             )
         }
         else if (field.type == "hidden") {
@@ -48,7 +49,7 @@ export default function Form({ title, fields, submitCallback, error, submitText 
         }
         else if (field.type == "file") {
             return(
-                <input type="file" name={field.name} id={field.name} />
+                <input style={formStyles.input} type="file" name={field.name} id={field.name} />
             )
         }
         else {
@@ -58,7 +59,7 @@ export default function Form({ title, fields, submitCallback, error, submitText 
 
     const inputs = fields.map(field => 
         <Fragment key={field.name}>
-            <label htmlFor={field.name}>{field.displayName}</label>
+            <label htmlFor={field.name} style={formStyles.label}>{field.displayName}</label>
             {getInputElement(field)}<br/>
         </Fragment>
     )
@@ -70,6 +71,8 @@ export default function Form({ title, fields, submitCallback, error, submitText 
         let fileData;
         for (let field of fields) {
             if (field.type === "file") {
+                let fileObject = formData.get(field.name);
+                if (fileObject.size == 0) continue;
                 fileData = await convertFileToBase64(formData.get(field.name));
                 valuesToSend[field.name] = fileData;
             }
@@ -92,9 +95,9 @@ export default function Form({ title, fields, submitCallback, error, submitText 
     return (
         <>
             <h3>{title}</h3>
-            <form onSubmit={submitHandler} noValidate ref={formElem}>
+            <form onSubmit={submitHandler} noValidate ref={formElem} style={formStyles.form}>
                 {inputs}
-                <button type="submit">{submitText}</button>
+                <button style={buttonStyles.addButton} type="submit">{submitText}</button>
                 <p className="error">{error}</p>
             </form>
         </>

@@ -1,0 +1,28 @@
+.pet-card.pet{
+    border: 1px solid black;
+    border-radius: 1em;
+    padding: 2em;
+    display: flex;
+    margin: 2em;
+}
+
+.pet-card img {
+    width: 15vw;
+    height: 15vw;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.pet-card .pet-info {
+    display: inline-block;
+    margin-left: 3em;
+}
+
+.pet-card .pet-info p.name {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.pet-card .pet-info button {
+    margin-top: 1.5em;
+}

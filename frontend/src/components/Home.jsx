@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import PetList from "./PetList";
 import { UserContext } from "../context/UserContext";
-import { Navigate } from "react-router";
+import Welcome from "./Welcome";
 
 export default function Home() {
 
@@ -11,7 +11,6 @@ export default function Home() {
         return (<PetList />)
     }
     else {
-        //return (<Navigate to='/login' />)
-        return (<h1>Placeholder</h1>)
+        return (<Welcome />)
     }
 }
