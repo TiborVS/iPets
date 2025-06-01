@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import callApi from "../utils/callApi.js";
+import { formStyles, buttonStyles } from "../utils/Theme.js";
 
 const FeedingForm = () => {
     const { petId } = useParams();
@@ -65,25 +66,27 @@ const FeedingForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h2>Dodaj hranjenje za žival</h2>
+        <form onSubmit={handleSubmit} style={formStyles.form}>
+            <h2 style={formStyles.title}>Dodaj hranjenje za žival</h2>
 
-            <label>Čas hranjenja</label>
+            <label style={formStyles.label}>Čas hranjenja</label>
             <input
                 type="datetime-local"
                 value={feedingTime}
                 onChange={(e) => setFeedingTime(e.target.value)}
                 required
+                style={formStyles.input}
             />
 
-            <label>Hrana</label>
+            <label style={formStyles.label}>Hrana</label>
             {loadingFoods ? (
-                <p>Nalaganje hrane...</p>
+                <p style={formStyles.loadingText}>Nalaganje hrane...</p>
             ) : (
                 <select
                     value={foodId}
                     onChange={(e) => setFoodId(e.target.value)}
                     required
+                    style={formStyles.input}
                 >
                     {foods.map((food) => (
                         <option key={food.id} value={food.id}>
@@ -93,7 +96,15 @@ const FeedingForm = () => {
                 </select>
             )}
 
-            <button type="submit" disabled={loading || loadingFoods}>
+            <button
+                type="submit"
+                disabled={loading || loadingFoods}
+                style={{
+                    ...buttonStyles.addButton,
+                    ...(loading || loadingFoods ? buttonStyles.disabledButton : {}),
+                    marginTop: '20px',
+                }}
+            >
                 {loading ? "Dodajanje..." : "Dodaj hranjenje"}
             </button>
         </form>
