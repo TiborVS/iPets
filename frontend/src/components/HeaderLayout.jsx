@@ -14,6 +14,7 @@ const navbarWrapperStyle = {
     fontFamily: 'Arial, sans-serif',
     color: offWhite,
     display: 'flex',
+    flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'space-between',
 };

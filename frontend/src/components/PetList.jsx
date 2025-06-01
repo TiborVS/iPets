@@ -40,7 +40,6 @@ export default function PetList() {
             {pets && pets.map((pet) =>
                 <PetCard key={pet.id} pet={pet} />
             )}
-            <button onClick={() => navigate("/medications")}>Dodaj zdravilo</button>
         </div>
     )
 

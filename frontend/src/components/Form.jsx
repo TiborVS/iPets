@@ -1,5 +1,6 @@
 import { Fragment, useState, useMemo, useEffect, useRef } from "react"
 import { formStyles, buttonStyles } from "../utils/Theme";
+import '../styles/Form.css';
 
 export default function Form({ title, fields, submitCallback, error, submitText }) {
 
@@ -93,13 +94,13 @@ export default function Form({ title, fields, submitCallback, error, submitText 
     }
 
     return (
-        <>
+        <div className="form">
             <h3>{title}</h3>
             <form onSubmit={submitHandler} noValidate ref={formElem} style={formStyles.form}>
                 {inputs}
                 <button style={buttonStyles.addButton} type="submit">{submitText}</button>
                 <p className="error">{error}</p>
             </form>
-        </>
+        </div>
     )
 }
