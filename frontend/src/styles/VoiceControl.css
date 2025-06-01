@@ -1,0 +1,60 @@
+.voice-control-container {
+    margin: 2rem auto;
+    padding: 1.5rem 2rem;
+    background-color: #f8f9fa; /* svetlo ozadje, enako kot ostale sekcije */
+    border-radius: 8px;
+    max-width: 500px;
+    text-align: center;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.voice-control-container button {
+    background-color: #0d6efd; /* bootstrap primarna modra */
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.3rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.voice-control-container button:hover {
+    background-color: #0b5ed7;
+}
+
+.voice-control-container button:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}
+
+.voice-control-container .voice-transcript {
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: #343a40;
+    font-style: italic;
+}
+
+.voice-control-container details {
+    margin-top: 1.2rem;
+    text-align: left;
+}
+
+.voice-control-container summary {
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    color: #0d6efd;
+}
+
+.voice-control-container ul {
+    margin-top: 0.6rem;
+    padding-left: 1.5rem;
+    color: #212529;
+    font-size: 0.95rem;
+}
+
+.voice-control-container ul li {
+    margin-bottom: 0.4rem;
+}

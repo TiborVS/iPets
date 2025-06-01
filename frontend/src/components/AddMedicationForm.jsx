@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import callApi from '../utils/callApi';
+import {buttonStyles, formStyles} from "../utils/Theme.js";
 
 export default function AddMedicationForm() {
     const [form, setForm] = useState({ name: '', description: '' });
@@ -27,13 +28,20 @@ export default function AddMedicationForm() {
 
     return (
         <div className="container">
-            <h2>Dodaj zdravilo</h2>
-            <form onSubmit={handleSubmit}>
-                <label>Naziv:</label>
-                <input name="name" value={form.name} onChange={handleChange} required />
-                <label>Opis:</label>
-                <textarea name="description" value={form.description} onChange={handleChange} />
-                <button type="submit">Shrani</button>
+            <h2 style={formStyles.title}>Dodaj zdravilo</h2>
+            <form onSubmit={handleSubmit} style={formStyles.form}>
+                <label style={formStyles.label}>Naziv:</label>
+                <input style={formStyles.input} name="name" value={form.name} onChange={handleChange} required />
+                <label style={formStyles.label}>Opis:</label>
+                <textarea style={formStyles.input} name="description" value={form.description} onChange={handleChange} />
+                <button
+                    type="submit"
+                    style={{
+                        ...buttonStyles.addButton,
+                        marginTop: '20px',
+                    }}
+                >Dodaj zdravilo
+                </button>
                 {error && <p style={{ color: 'red' }}>{error}</p>}
             </form>
         </div>

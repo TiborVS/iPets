@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import { voiceControlStyles, buttonStyles } from "../utils/Theme.js";
+import '../styles/VoiceControl.css';
 
 const VoiceControl = () => {
     const {
@@ -30,20 +32,24 @@ const VoiceControl = () => {
     }, [transcript]);
 
     return (
-        <div style={{ textAlign: 'center'}}>
+        <div style={voiceControlStyles.container}>
             <button
                 onClick={() => {SpeechRecognition.startListening({language: 'sl'})}}
                 disabled={listening}
+                style={{
+                    ...voiceControlStyles.button,
+                    ...(listening ? buttonStyles.disabledButton : {})
+                }}
             >
                 {listening ? 'Poslušam...' : 'Začni poslušati'}
             </button>
 
-            <p>
+            <div>
                 <strong>Rekel si:</strong> {transcript}
-            </p>
+            </div>
 
-            <details>
-                <summary>Pokaži možne ukaze</summary>
+            <details style={voiceControlStyles.details}>
+                <summary style={voiceControlStyles.summary}>Pokaži možne ukaze</summary>
                 <div>
                     <p>Reci <strong>"DODAJ"</strong> za dodajanje novega ljubljenčka</p>
                     <p>Reci <strong>"HRANA"</strong> za pregled hrane in prigrizkov</p>

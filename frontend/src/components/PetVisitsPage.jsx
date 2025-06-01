@@ -1,6 +1,7 @@
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import callApi from '../utils/callApi';
+import {buttonStyles, formStyles, medicationStyles} from "../utils/Theme.js";
 
 export default function PetVisitsPage() {
     const { id: petId } = useParams();
@@ -36,31 +37,47 @@ export default function PetVisitsPage() {
     };
 
     return (
-        <div className="container">
-            <h2>Veterinarski obiski</h2>
+        <div style={medicationStyles.container}>
+            <h2 style={medicationStyles.header}>Veterinarski obiski</h2>
 
-            <Link to={`/pets/${petId}`}>Nazaj</Link>
+            <Link to={`/pets/${petId}`} style={medicationStyles.backLink}>← Nazaj</Link>
 
-            <div >
-                <button onClick={() => navigate(`/pets/${petId}/visits/add`)}>Dodaj obisk</button>
+            <div style={{ marginBottom: "20px" }}>
+                <button
+                    onClick={() => navigate(`/pets/${petId}/visits/add`)}
+                    style={buttonStyles.addButton}
+                >
+                    Dodaj obisk
+                </button>
             </div>
 
-            {error && <p>{error}</p>}
+            {error && <p style={{ color: "red" }}>{error}</p>}
 
             {visits.length === 0 ? (
                 <p>Ni zabeleženih obiskov.</p>
             ) : (
-                <ul>
-                    {visits.map(visit => (
-                        <li key={visit.id} >
-                            <p><strong>Datum:</strong> {visit.visitDate}</p>
-                            <p><strong>Čas:</strong> {visit.visitTime}</p>
-                            <p><strong>Lokacija:</strong> {visit.location}</p>
-                            <p><strong>Opis:</strong> {visit.notes}</p>
-                            <button onClick={() => navigate(`/pets/${petId}/visits/edit/${visit.id}`)}>Uredi</button>
-                            <button onClick={() => handleDelete(visit.id)} >
-                                Izbriši
-                            </button>
+                <ul style={{ listStyle: "none", padding: 0 }}>
+                    {visits.map((visit) => (
+                        <li key={visit.id} style={medicationStyles.medicationItem}>
+                            <p><span style={medicationStyles.label}>Datum:</span> {visit.visitDate}</p>
+                            <p><span style={medicationStyles.label}>Čas:</span> {visit.visitTime}</p>
+                            <p><span style={medicationStyles.label}>Lokacija:</span> {visit.location}</p>
+                            <p><span style={medicationStyles.label}>Opis:</span> {visit.notes}</p>
+
+                            <div style={buttonStyles.actionButtons}>
+                                <button
+                                    onClick={() => navigate(`/pets/${petId}/visits/edit/${visit.id}`)}
+                                    style={buttonStyles.addButton}
+                                >
+                                    Uredi
+                                </button>
+                                <button
+                                    onClick={() => handleDelete(visit.id)}
+                                    style={buttonStyles.deleteButton}
+                                >
+                                    Izbriši
+                                </button>
+                            </div>
                         </li>
                     ))}
                 </ul>

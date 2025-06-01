@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import callApi from "../utils/callApi.js";
-import {buttonStyles} from "../utils/Theme.js";
+import {buttonStyles, medicationStyles} from "../utils/Theme.js";
 
 const styles = {
     container: {
@@ -76,13 +76,16 @@ const FoodList = () => {
     return (
         <div style={styles.container}>
             <h2 style={styles.header}>Hrana in prigrizki</h2>
+            <Link to={`/pets`} style={medicationStyles.backLink}>← Nazaj</Link>
 
-            <button
-                onClick={handleAdd}
-                style={buttonStyles.addButton}
-            >
-                Dodaj hrano
-            </button>
+            <div style={{ marginBottom: "20px" }}>
+                <button
+                    onClick={handleAdd}
+                    style={buttonStyles.addButton}
+                >
+                    Dodaj hrano
+                </button>
+            </div>
 
             {loading && <p>Nalaganje...</p>}
             {!loading && foods.length === 0 && <p>Ni dodane hrane</p>}

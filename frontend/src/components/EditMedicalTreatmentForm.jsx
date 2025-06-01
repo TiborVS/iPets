@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import callApi from '../utils/callApi';
+import {buttonStyles, formStyles} from "../utils/Theme.js";
 
 export default function EditMedicalTreatmentForm() {
     const { id: petId, treatmentId } = useParams();
@@ -49,32 +50,61 @@ export default function EditMedicalTreatmentForm() {
 
     return (
         <div className="container">
-            <h2>Uredi zdravljenje</h2>
-            <Link to={`/pets/${petId}/treatments`}>Nazaj</Link>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Zdravilo:</label>
-                    <select name="medicationId" value={form.medicationId} onChange={handleChange} required>
-                        <option value="">-- izberi --</option>
-                        {medications.map(m => (
-                            <option key={m.id} value={m.id}>{m.name}</option>
-                        ))}
-                    </select>
-                </div>
-                <div>
-                    <label>Tip:</label>
-                    <input type="text" name="type" value={form.type} onChange={handleChange} required />
-                </div>
-                <div>
-                    <label>Doziranje:</label>
-                    <input type="text" name="dosage" value={form.dosage} onChange={handleChange} required />
-                </div>
-                <div>
-                    <label>Opis:</label>
-                    <textarea name="description" value={form.description} onChange={handleChange} required />
-                </div>
-                <button type="submit">Shrani spremembe</button>
-                {error && <p style={{ color: 'red' }}>{error}</p>}
+            <form onSubmit={handleSubmit} style={formStyles.form}>
+                <h2 style={formStyles.title}>Uredi zdravljenje</h2>
+                <label style={formStyles.label}>Zdravilo:</label>
+                <select
+                    name="medicationId"
+                    value={form.medicationId}
+                    onChange={handleChange}
+                    style={formStyles.input}
+                    required
+                >
+                    <option value="">-- izberi --</option>
+                    {medications.map((m) => (
+                        <option key={m.id} value={m.id}>
+                            {m.name}
+                        </option>
+                    ))}
+                </select>
+
+                <label style={formStyles.label}>Tip:</label>
+                <input
+                    type="text"
+                    name="type"
+                    value={form.type}
+                    onChange={handleChange}
+                    style={formStyles.input}
+                    required
+                />
+
+                <label style={formStyles.label}>Doziranje:</label>
+                <input
+                    type="text"
+                    name="dosage"
+                    value={form.dosage}
+                    onChange={handleChange}
+                    style={formStyles.input}
+                    required
+                />
+
+                <label style={formStyles.label}>Opis:</label>
+                <textarea
+                    name="description"
+                    value={form.description}
+                    onChange={handleChange}
+                    style={formStyles.input}
+                    required
+                />
+
+                <button
+                    type="submit"
+                    style={{ ...buttonStyles.addButton, marginTop: "20px" }}
+                >
+                    Shrani spremembe
+                </button>
+
+                {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
             </form>
         </div>
     );

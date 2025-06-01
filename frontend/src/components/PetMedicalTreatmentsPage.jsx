@@ -1,6 +1,7 @@
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import callApi from '../utils/callApi';
+import {buttonStyles, medicationStyles} from "../utils/Theme.js";
 
 export default function PetMedicalTreatmentsPage() {
     const { id: petId } = useParams();
@@ -36,25 +37,62 @@ export default function PetMedicalTreatmentsPage() {
     };
 
     return (
-        <div className="container">
-            <h2>Zdravljenja</h2>
-            <Link to={`/pets/${petId}`}>Nazaj</Link>
-            <div>
-                <button onClick={() => navigate(`/pets/${petId}/treatments/add`)}>Dodaj zdravljenje</button>
+        <div style={medicationStyles.container}>
+            <h2 style={medicationStyles.header}>Zdravljenja</h2>
+
+            <Link to={`/pets/${petId}`} style={medicationStyles.backLink}>
+                ← Nazaj
+            </Link>
+
+            <div style={{ marginBottom: "20px" }}>
+                <button
+                    style={medicationStyles.button}
+                    onClick={() => navigate(`/pets/${petId}/treatments/add`)}
+                >
+                    Dodaj zdravljenje
+                </button>
             </div>
-            {error && <p>{error}</p>}
+
+            {error && <p style={{ color: "red" }}>{error}</p>}
+
             {treatments.length === 0 ? (
                 <p>Ni zabeleženih zdravljenj.</p>
             ) : (
-                <ul>
-                    {treatments.map(t => (
-                        <li key={t.id}>
-                            <p><strong>Zdravilo:</strong> {t.medicationName}</p>
-                            <p><strong>Tip:</strong> {t.type}</p>
-                            <p><strong>Doziranje:</strong> {t.dosage}</p>
-                            <p><strong>Opis:</strong> {t.description}</p>
-                            <button onClick={() => navigate(`/pets/${petId}/treatments/edit/${t.id}`)}>Uredi</button>
-                            <button onClick={() => handleDelete(t.id)} >Izbriši</button>
+                <ul style={medicationStyles.list}>
+                    {treatments.map((t) => (
+                        <li key={t.id} style={medicationStyles.item}>
+                            <p>
+                                <span style={medicationStyles.label}>Zdravilo:</span>
+                                {t.medicationName}
+                            </p>
+                            <p>
+                                <span style={medicationStyles.label}>Tip:</span>
+                                {t.type}
+                            </p>
+                            <p>
+                                <span style={medicationStyles.label}>Doziranje:</span>
+                                {t.dosage}
+                            </p>
+                            <p>
+                                <span style={medicationStyles.label}>Opis:</span>
+                                {t.description}
+                            </p>
+                            <div style={medicationStyles.actionButtons}>
+                                <button
+                                    style={buttonStyles.addButton}
+                                    onClick={() =>
+                                        navigate(`/pets/${petId}/treatments/edit/${t.id}`)
+                                    }
+                                >
+                                    Uredi
+                                </button>
+                                <button
+                                    style={buttonStyles.deleteButton}
+                                    onClick={() => handleDelete(t.id)}
+                                >
+                                    Izbriši
+                                </button>
+                            </div>
                         </li>
                     ))}
                 </ul>

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import callApi from '../utils/callApi';
+import {buttonStyles, formStyles} from "../utils/Theme.js";
 
 export default function AddVisitForm() {
     const { id: petId } = useParams();
@@ -36,27 +37,49 @@ export default function AddVisitForm() {
 
     return (
         <div className="container">
-            <h2>Dodaj veterinarski obisk</h2>
-            <Link to={`/pets/${petId}/visits`}>Nazaj</Link>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Datum:</label>
-                    <input type="date" value={visitDate} onChange={e => setVisitDate(e.target.value)} required />
-                </div>
-                <div>
-                    <label>Čas:</label>
-                    <input type="time" value={visitTime} onChange={e => setVisitTime(e.target.value)} required />
-                </div>
-                <div>
-                    <label>Lokacija:</label>
-                    <input type="text" value={location} onChange={e => setLocation(e.target.value)} required />
-                </div>
-                <div>
-                    <label>Opis:</label>
-                    <textarea value={notes} onChange={e => setNotes(e.target.value)} required />
-                </div>
-                <button type="submit">Shrani</button>
-                {error && <p style={{ color: 'red' }}>{error}</p>}
+            <form onSubmit={handleSubmit} style={formStyles.form}>
+                <h2 style={formStyles.title}>Dodaj veterinarski obisk</h2>
+
+                <label style={formStyles.label}>Datum:</label>
+                <input
+                    type="date"
+                    value={visitDate}
+                    onChange={(e) => setVisitDate(e.target.value)}
+                    style={formStyles.input}
+                    required
+                />
+
+                <label style={formStyles.label}>Čas:</label>
+                <input
+                    type="time"
+                    value={visitTime}
+                    onChange={(e) => setVisitTime(e.target.value)}
+                    style={formStyles.input}
+                    required
+                />
+
+                <label style={formStyles.label}>Lokacija:</label>
+                <input
+                    type="text"
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    style={formStyles.input}
+                    required
+                />
+
+                <label style={formStyles.label}>Opis:</label>
+                <textarea
+                    value={notes}
+                    onChange={(e) => setNotes(e.target.value)}
+                    style={formStyles.input}
+                    required
+                />
+
+                <button type="submit" style={{ ...buttonStyles.addButton, marginTop: "20px" }}>
+                    Shrani obisk
+                </button>
+
+                {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
             </form>
         </div>
     );
